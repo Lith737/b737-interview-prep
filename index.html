@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B737 Interview / Simulator Check Preparation</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --panel-2: #172033;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --accent-2: #93c5fd;
+      --ok: #22c55e;
+      --bad: #ef4444;
+      --border: #253047;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #07101c 0%, #0b1220 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      padding: 36px 0 18px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.1;
+      margin: 0 0 10px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+
+    p { margin: 0 0 10px; }
+
+    .subtitle {
+      color: var(--accent-2);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .section {
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      margin: 18px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    }
+
+    .audio-wrap audio {
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    button {
+      background: var(--accent);
+      color: #08111d;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    button:hover { filter: brightness(1.08); }
+
+    .flashcard {
+      background: linear-gradient(180deg, #172033 0%, #121a29 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-label {
+      color: var(--accent-2);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .card-text {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 14px 0;
+    }
+
+    .card-answer {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: #d1fae5;
+      display: none;
+      font-size: 18px;
+    }
+
+    .quiz-status {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      color: var(--muted);
+    }
+
+    .quiz-box {
+      background: linear-gradient(180deg, #172033 0%, #121a29 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .quiz-question {
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .option.correct {
+      border-color: var(--ok);
+      color: #dcfce7;
+      background: rgba(34, 197, 94, 0.08);
+    }
+
+    .option.wrong {
+      border-color: var(--bad);
+      color: #fee2e2;
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .score-box {
+      display: none;
+      background: linear-gradient(180deg, #172033 0%, #121a29 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .score-big {
+      font-size: 34px;
+      font-weight: 800;
+      margin: 8px 0;
+    }
+
+    .footer {
+      padding: 10px 0 30px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .warning {
+      color: #fcd34d;
+      margin-top: 10px;
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .card-text, .quiz-question { font-size: 20px; }
+      .container { padding: 16px; }
+      .section { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="subtitle">Episode 1 – Boeing 737 Limitations</div>
+      <h1>B737 Interview / Simulator Check Preparation</h1>
+      <p class="muted">A quick refresher for Boeing 737 limitations before airline interviews, simulator assessments, and recurrent checks.</p>
+    </section>
+
+    <section class="section audio-wrap">
+      <h2>Podcast</h2>
+      <p class="muted">Listen to Episode 1 – Limitations.</p>
+      <audio controls>
+        <source src="episode1.mp3" type="audio/mpeg" />
+        Your browser does not support the audio player.
+      </audio>
+      <div class="pill-row">
+        <div class="pill">VMO / MMO</div>
+        <div class="pill">Flaps & Gear</div>
+        <div class="pill">Altitude</div>
+        <div class="pill">Fuel</div>
+        <div class="pill">Wind Limits</div>
+        <div class="pill">Autoland</div>
+        <div class="pill">APU</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Flashcards</h2>
+      <p class="muted">Use Previous / Next to move through the cards. Click Reveal Answer when ready.</p>
+      <div class="controls">
+        <button class="secondary" id="prevCard">Previous</button>
+        <button id="revealCard">Reveal Answer</button>
+        <button class="secondary" id="nextCard">Next</button>
+      </div>
+      <div class="flashcard">
+        <div>
+          <div class="card-label" id="cardCounter">Card 1</div>
+          <div class="card-text" id="cardQuestion">Loading flashcards...</div>
+        </div>
+        <div class="card-answer" id="cardAnswer"></div>
+      </div>
+      <div class="warning" id="flashWarning">Flashcards could not be loaded. Make sure flashcards.json is in the same folder as index.html.</div>
+    </section>
+
+    <section class="section">
+      <h2>Quiz</h2>
+      <p class="muted">Full limitations knowledge check.</p>
+
+      <div class="quiz-box" id="quizBox">
+        <div class="quiz-status">
+          <div id="quizProgress">Question 1</div>
+          <div id="quizScoreLive">Score: 0</div>
+        </div>
+        <div class="quiz-question" id="quizQuestion">Loading quiz...</div>
+        <div class="options" id="quizOptions"></div>
+      </div>
+
+      <div class="score-box" id="scoreBox">
+        <div class="muted">Quiz complete</div>
+        <div class="score-big" id="finalScore">0 / 0</div>
+        <p id="finalMessage"></p>
+        <div style="margin-top:16px;">
+          <button id="restartQuiz">Restart Quiz</button>
+        </div>
+      </div>
+      <div class="warning" id="quizWarning">Quiz could not be loaded. Make sure quiz.json is in the same folder as index.html.</div>
+    </section>
+
+    <div class="footer">
+      Values are based on your selected B737NG limitations dataset. Operator SOP limits may differ.
+    </div>
+  </div>
+
+  <script>
+    let flashcards = [];
+    let currentCard = 0;
+
+    let quiz = [];
+    let quizIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    async function loadJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error('Failed to load ' + path);
+      return response.json();
+    }
+
+    function renderCard() {
+      if (!flashcards.length) return;
+      const card = flashcards[currentCard];
+      document.getElementById('cardCounter').textContent = `Card ${currentCard + 1} / ${flashcards.length}`;
+      document.getElementById('cardQuestion').textContent = card.question;
+      const answerEl = document.getElementById('cardAnswer');
+      answerEl.textContent = card.answer;
+      answerEl.style.display = 'none';
+    }
+
+    function revealCard() {
+      document.getElementById('cardAnswer').style.display = 'block';
+    }
+
+    function nextCard() {
+      if (!flashcards.length) return;
+      currentCard = (currentCard + 1) % flashcards.length;
+      renderCard();
+    }
+
+    function prevCard() {
+      if (!flashcards.length) return;
+      currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+      renderCard();
+    }
+
+    function renderQuiz() {
+      if (!quiz.length) return;
+
+      if (quizIndex >= quiz.length) {
+        document.getElementById('quizBox').style.display = 'none';
+        document.getElementById('scoreBox').style.display = 'block';
+        document.getElementById('finalScore').textContent = `${score} / ${quiz.length}`;
+
+        let message = 'Review recommended.';
+        if (score === quiz.length) message = 'Excellent. You are ready for a strong limitations review.';
+        else if (score >= Math.ceil(quiz.length * 0.8)) message = 'Very solid result. Minor review recommended.';
+        else if (score >= Math.ceil(quiz.length * 0.6)) message = 'Decent result, but review the weak areas.';
+
+        document.getElementById('finalMessage').textContent = message;
+        return;
+      }
+
+      answered = false;
+      const q = quiz[quizIndex];
+      document.getElementById('quizProgress').textContent = `Question ${quizIndex + 1} / ${quiz.length}`;
+      document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
+      document.getElementById('quizQuestion').textContent = q.question;
+
+      const optionsEl = document.getElementById('quizOptions');
+      optionsEl.innerHTML = '';
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.addEventListener('click', () => handleAnswer(index, btn));
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(selectedIndex, selectedButton) {
+      if (answered) return;
+      answered = true;
+      const q = quiz[quizIndex];
+      const buttons = Array.from(document.querySelectorAll('.option'));
+
+      buttons.forEach((btn, idx) => {
+        if (idx === q.correct) btn.classList.add('correct');
+      });
+
+      if (selectedIndex === q.correct) {
+        score += 1;
+      } else {
+        selectedButton.classList.add('wrong');
+      }
+
+      document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
+
+      setTimeout(() => {
+        quizIndex += 1;
+        renderQuiz();
+      }, 900);
+    }
+
+    function restartQuiz() {
+      quizIndex = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('scoreBox').style.display = 'none';
+      document.getElementById('quizBox').style.display = 'block';
+      renderQuiz();
+    }
+
+    async function init() {
+      document.getElementById('prevCard').addEventListener('click', prevCard);
+      document.getElementById('nextCard').addEventListener('click', nextCard);
+      document.getElementById('revealCard').addEventListener('click', revealCard);
+      document.getElementById('restartQuiz').addEventListener('click', restartQuiz);
+
+      try {
+        flashcards = await loadJson('flashcards.json');
+        renderCard();
+      } catch (e) {
+        document.getElementById('cardQuestion').textContent = 'Could not load flashcards.';
+        document.getElementById('flashWarning').style.display = 'block';
+      }
+
+      try {
+        quiz = await loadJson('quiz.json');
+        renderQuiz();
+      } catch (e) {
+        document.getElementById('quizQuestion').textContent = 'Could not load quiz.';
+        document.getElementById('quizWarning').style.display = 'block';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
