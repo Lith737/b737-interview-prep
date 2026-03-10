@@ -19,6 +19,7 @@
     }
 
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -156,22 +157,22 @@
       color: var(--muted);
     }
 
-.progress-wrap {
-  width: 100%;
-  height: 12px;
-  background: #0f172a;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
+    .progress-wrap {
+      width: 100%;
+      height: 12px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
 
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
-  transition: width 0.3s ease;
-}
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+      transition: width 0.3s ease;
+    }
 
     .quiz-box {
       background: linear-gradient(180deg, #172033 0%, #121a29 100%);
@@ -275,13 +276,14 @@
     <section class="section">
       <h2>Flashcards</h2>
       <p class="muted">Use Previous / Next to move through the cards. Click Reveal Answer when ready.</p>
-<div class="controls">
-  <button class="secondary" id="prevCard">Previous</button>
-  <button id="revealCard">Reveal Answer</button>
-  <button class="secondary" id="nextCard">Next</button>
-  <button class="secondary" id="shuffleCards">Shuffle</button>
-  <button class="secondary" id="restartDeck">Restart Deck</button>
-</div>
+      <div class="controls">
+        <button class="secondary" id="prevCard">Previous</button>
+        <button id="revealCard">Reveal Answer</button>
+        <button class="secondary" id="nextCard">Next</button>
+        <button class="secondary" id="shuffleCards">Shuffle</button>
+        <button class="secondary" id="restartDeck">Restart Deck</button>
+      </div>
+
       <div class="flashcard">
         <div>
           <div class="card-label" id="cardCounter">Card 1</div>
@@ -289,7 +291,10 @@
         </div>
         <div class="card-answer" id="cardAnswer"></div>
       </div>
-      <div class="warning" id="flashWarning">Flashcards could not be loaded. Make sure flashcards.json is in the same folder as index.html.</div>
+
+      <div class="warning" id="flashWarning">
+        Flashcards could not be loaded. Make sure flashcards.json is in the same folder as index.html.
+      </div>
     </section>
 
     <section class="section">
@@ -301,6 +306,11 @@
           <div id="quizProgress">Question 1</div>
           <div id="quizScoreLive">Score: 0</div>
         </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar" id="quizProgressBar"></div>
+        </div>
+
         <div class="quiz-question" id="quizQuestion">Loading quiz...</div>
         <div class="options" id="quizOptions"></div>
       </div>
@@ -313,7 +323,10 @@
           <button id="restartQuiz">Restart Quiz</button>
         </div>
       </div>
-      <div class="warning" id="quizWarning">Quiz could not be loaded. Make sure quiz.json is in the same folder as index.html.</div>
+
+      <div class="warning" id="quizWarning">
+        Quiz could not be loaded. Make sure quiz.json is in the same folder as index.html.
+      </div>
     </section>
 
     <div class="footer">
@@ -322,163 +335,188 @@
   </div>
 
   <script>
-  let flashcards = [];
-  let currentCard = 0;
+    let flashcards = [];
+    let currentCard = 0;
 
-  let quiz = [];
-  let quizIndex = 0;
-  let score = 0;
-  let answered = false;
+    let quiz = [];
+    let quizIndex = 0;
+    let score = 0;
+    let answered = false;
 
-  async function loadJson(path) {
-    const response = await fetch(path);
-    if (!response.ok) throw new Error('Failed to load ' + path);
-    return response.json();
-  }
-
-  function renderCard() {
-    if (!flashcards.length) return;
-    const card = flashcards[currentCard];
-    document.getElementById('cardCounter').textContent = `Card ${currentCard + 1} / ${flashcards.length}`;
-    document.getElementById('cardQuestion').textContent = card.question;
-    const answerEl = document.getElementById('cardAnswer');
-    answerEl.textContent = card.answer;
-    answerEl.style.display = 'none';
-  }
-
-  function revealCard() {
-    document.getElementById('cardAnswer').style.display = 'block';
-  }
-
-  function nextCard() {
-    if (!flashcards.length) return;
-    currentCard = (currentCard + 1) % flashcards.length;
-    renderCard();
-  }
-
-  function prevCard() {
-    if (!flashcards.length) return;
-    currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
-    renderCard();
-  }
-
-  function shuffleCards() {
-    if (!flashcards.length) return;
-
-    for (let i = flashcards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+    async function loadJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error('Failed to load ' + path);
+      return response.json();
     }
 
-    currentCard = 0;
-    renderCard();
-  }
+    function renderCard() {
+      if (!flashcards.length) return;
 
-  function restartDeck() {
-    if (!flashcards.length) return;
-    currentCard = 0;
-    renderCard();
-  }
+      const card = flashcards[currentCard];
+      document.getElementById('cardCounter').textContent = `Card ${currentCard + 1} / ${flashcards.length}`;
+      document.getElementById('cardQuestion').textContent = card.question;
 
-  function renderQuiz() {
-    if (!quiz.length) return;
-
-    if (quizIndex >= quiz.length) {
-      document.getElementById('quizBox').style.display = 'none';
-      document.getElementById('scoreBox').style.display = 'block';
-      document.getElementById('quizProgressBar').style.width = '100%';
-      document.getElementById('finalScore').textContent = `${score} / ${quiz.length}`;
-
-      let message = 'Review recommended.';
-      if (score === quiz.length) message = 'Excellent. You are ready for a strong limitations review.';
-      else if (score >= Math.ceil(quiz.length * 0.8)) message = 'Very solid result. Minor review recommended.';
-      else if (score >= Math.ceil(quiz.length * 0.6)) message = 'Decent result, but review the weak areas.';
-
-      document.getElementById('finalMessage').textContent = message;
-      return;
+      const answerEl = document.getElementById('cardAnswer');
+      answerEl.textContent = card.answer;
+      answerEl.style.display = 'none';
     }
 
-    answered = false;
-    const q = quiz[quizIndex];
-    document.getElementById('quizProgress').textContent = `Question ${quizIndex + 1} / ${quiz.length}`;
-    document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
-    document.getElementById('quizQuestion').textContent = q.question;
-
-    const progressPercent = (quizIndex / quiz.length) * 100;
-    document.getElementById('quizProgressBar').style.width = `${progressPercent}%`;
-
-    const optionsEl = document.getElementById('quizOptions');
-    optionsEl.innerHTML = '';
-
-    q.options.forEach((option, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'option';
-      btn.textContent = option;
-      btn.addEventListener('click', () => handleAnswer(index, btn));
-      optionsEl.appendChild(btn);
-    });
-  }
-
-  function handleAnswer(selectedIndex, selectedButton) {
-    if (answered) return;
-    answered = true;
-    const q = quiz[quizIndex];
-    const buttons = Array.from(document.querySelectorAll('.option'));
-
-    buttons.forEach((btn, idx) => {
-      if (idx === q.correct) btn.classList.add('correct');
-    });
-
-    if (selectedIndex === q.correct) {
-      score += 1;
-    } else {
-      selectedButton.classList.add('wrong');
+    function revealCard() {
+      const answerEl = document.getElementById('cardAnswer');
+      if (answerEl) answerEl.style.display = 'block';
     }
 
-    document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
-
-    setTimeout(() => {
-      quizIndex += 1;
-      renderQuiz();
-    }, 900);
-  }
-
-  function restartQuiz() {
-    quizIndex = 0;
-    score = 0;
-    answered = false;
-    document.getElementById('scoreBox').style.display = 'none';
-    document.getElementById('quizBox').style.display = 'block';
-    document.getElementById('quizProgressBar').style.width = '0%';
-    renderQuiz();
-  }
-
-  async function init() {
-    document.getElementById('prevCard').addEventListener('click', prevCard);
-    document.getElementById('nextCard').addEventListener('click', nextCard);
-    document.getElementById('revealCard').addEventListener('click', revealCard);
-    document.getElementById('shuffleCards').addEventListener('click', shuffleCards);
-    document.getElementById('restartDeck').addEventListener('click', restartDeck);
-    document.getElementById('restartQuiz').addEventListener('click', restartQuiz);
-
-    try {
-      flashcards = await loadJson('flashcards.json');
+    function nextCard() {
+      if (!flashcards.length) return;
+      currentCard = (currentCard + 1) % flashcards.length;
       renderCard();
-    } catch (e) {
-      document.getElementById('cardQuestion').textContent = 'Could not load flashcards.';
-      document.getElementById('flashWarning').style.display = 'block';
     }
 
-    try {
-      quiz = await loadJson('quiz.json');
+    function prevCard() {
+      if (!flashcards.length) return;
+      currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+      renderCard();
+    }
+
+    function shuffleCards() {
+      if (!flashcards.length) return;
+
+      for (let i = flashcards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+      }
+
+      currentCard = 0;
+      renderCard();
+    }
+
+    function restartDeck() {
+      if (!flashcards.length) return;
+      currentCard = 0;
+      renderCard();
+    }
+
+    function setQuizProgressBar(widthValue) {
+      const progressBar = document.getElementById('quizProgressBar');
+      if (progressBar) {
+        progressBar.style.width = widthValue;
+      }
+    }
+
+    function renderQuiz() {
+      if (!quiz.length) return;
+
+      if (quizIndex >= quiz.length) {
+        document.getElementById('quizBox').style.display = 'none';
+        document.getElementById('scoreBox').style.display = 'block';
+        setQuizProgressBar('100%');
+        document.getElementById('finalScore').textContent = `${score} / ${quiz.length}`;
+
+        let message = 'Review recommended.';
+        if (score === quiz.length) {
+          message = 'Excellent. Ready for interview.';
+        } else if (score >= Math.ceil(quiz.length * 0.8)) {
+          message = 'Very solid result. Minor review recommended.';
+        } else if (score >= Math.ceil(quiz.length * 0.6)) {
+          message = 'Decent result, but review the weak areas.';
+        }
+
+        document.getElementById('finalMessage').textContent = message;
+        return;
+      }
+
+      answered = false;
+      const q = quiz[quizIndex];
+
+      document.getElementById('quizProgress').textContent = `Question ${quizIndex + 1} / ${quiz.length}`;
+      document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
+      document.getElementById('quizQuestion').textContent = q.question;
+
+      const progressPercent = (quizIndex / quiz.length) * 100;
+      setQuizProgressBar(`${progressPercent}%`);
+
+      const optionsEl = document.getElementById('quizOptions');
+      optionsEl.innerHTML = '';
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.addEventListener('click', () => handleAnswer(index, btn));
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(selectedIndex, selectedButton) {
+      if (answered) return;
+
+      answered = true;
+      const q = quiz[quizIndex];
+      const buttons = Array.from(document.querySelectorAll('.option'));
+
+      buttons.forEach((btn, idx) => {
+        if (idx === q.correct) btn.classList.add('correct');
+      });
+
+      if (selectedIndex === q.correct) {
+        score += 1;
+      } else {
+        selectedButton.classList.add('wrong');
+      }
+
+      document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
+
+      setTimeout(() => {
+        quizIndex += 1;
+        renderQuiz();
+      }, 900);
+    }
+
+    function restartQuiz() {
+      quizIndex = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('scoreBox').style.display = 'none';
+      document.getElementById('quizBox').style.display = 'block';
+      setQuizProgressBar('0%');
       renderQuiz();
-    } catch (e) {
-      document.getElementById('quizQuestion').textContent = 'Could not load quiz.';
-      document.getElementById('quizWarning').style.display = 'block';
     }
-  }
 
-  init();
-</script>
+    async function init() {
+      const prevBtn = document.getElementById('prevCard');
+      const nextBtn = document.getElementById('nextCard');
+      const revealBtn = document.getElementById('revealCard');
+      const shuffleBtn = document.getElementById('shuffleCards');
+      const restartDeckBtn = document.getElementById('restartDeck');
+      const restartQuizBtn = document.getElementById('restartQuiz');
+
+      if (prevBtn) prevBtn.addEventListener('click', prevCard);
+      if (nextBtn) nextBtn.addEventListener('click', nextCard);
+      if (revealBtn) revealBtn.addEventListener('click', revealCard);
+      if (shuffleBtn) shuffleBtn.addEventListener('click', shuffleCards);
+      if (restartDeckBtn) restartDeckBtn.addEventListener('click', restartDeck);
+      if (restartQuizBtn) restartQuizBtn.addEventListener('click', restartQuiz);
+
+      try {
+        flashcards = await loadJson('flashcards.json');
+        renderCard();
+      } catch (e) {
+        document.getElementById('cardQuestion').textContent = 'Could not load flashcards.';
+        document.getElementById('flashWarning').style.display = 'block';
+        console.error('Flashcards error:', e);
+      }
+
+      try {
+        quiz = await loadJson('quiz.json');
+        renderQuiz();
+      } catch (e) {
+        document.getElementById('quizQuestion').textContent = 'Could not load quiz.';
+        document.getElementById('quizWarning').style.display = 'block';
+        console.error('Quiz error:', e);
+      }
+    }
+
+    init();
+  </script>
 </body>
 </html>
