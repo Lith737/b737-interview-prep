@@ -35,7 +35,7 @@
 
 {"id":18,"question":"Maximum autoland headwind?","options":["20 kt","25 kt","30 kt","35 kt"],"correct":1},
 
-{"id":19,"question":"Maximum autoland crosswind?","options":["10 kt","15 kt","20 kt","25 kt"],"correct":1},
+{"id":19,"question":"Maximum autoland crosswind?","options":["10 kt","15 kt","20 kt","25 kt"],"correct":2},
 
 {"id":20,"question":"Maximum autoland tailwind?","options":["5 kt","10 kt","15 kt","20 kt"],"correct":1},
 
