@@ -12,9 +12,54 @@
       "correct_answer": "39.5 m"
     },
     {
+      "question": "What is the tail height of the Boeing 737-800?",
+      "options": ["10.8 m", "11.5 m", "12.5 m", "13.2 m"],
+      "correct_answer": "12.5 m"
+    },
+    {
+      "question": "What type of fuselage structure is used on the Boeing 737?",
+      "options": [
+        "Monocoque",
+        "Semi-monocoque",
+        "Composite shell",
+        "Steel frame"
+      ],
+      "correct_answer": "Semi-monocoque"
+    },
+    {
+      "question": "Which part of the aircraft determines obstacle clearance during a turn?",
+      "options": ["Nose", "Tail", "Wingtip", "Landing gear"],
+      "correct_answer": "Wingtip"
+    },
+    {
       "question": "How much pavement width is roughly required to perform a 180° turn with a Boeing 737-900?",
       "options": ["18 m", "22 m", "26 m", "30 m"],
       "correct_answer": "26 m"
+    },
+    {
+      "question": "What is the maximum nose wheel steering angle?",
+      "options": ["45°", "60°", "75°", "90°"],
+      "correct_answer": "75°"
+    },
+    {
+      "question": "What minimum wingtip clearance should be maintained before starting a turn?",
+      "options": ["3 m", "4 m", "5.2 m", "6 m"],
+      "correct_answer": "5.2 m"
+    },
+    {
+      "question": "What type of doors are used on the Boeing 737?",
+      "options": ["Slide doors", "Plug-type doors", "Swing doors", "Hydraulic doors"],
+      "correct_answer": "Plug-type doors"
+    },
+    {
+      "question": "Why cannot plug-type doors be opened when pressurized?",
+      "options": [
+        "Mechanical locks prevent opening",
+        "Hydraulic pressure prevents movement",
+        "Cabin pressure forces the door into the frame",
+        "Electrical lock system prevents opening"
+      ],
+      "correct_answer": "Cabin pressure forces the door into the frame"
     },
     {
       "question": "What is the maximum wind limit for operating entry doors?",
@@ -27,6 +72,21 @@
       "correct_answer": "65 kt"
     },
     {
+      "question": "Where is the flight crew oxygen cylinder located?",
+      "options": [
+        "Cargo compartment",
+        "E&E compartment",
+        "Cockpit ceiling",
+        "Aft fuselage"
+      ],
+      "correct_answer": "E&E compartment"
+    },
+    {
+      "question": "What is the maximum pressure of the crew oxygen cylinder?",
+      "options": ["1200 psi", "1500 psi", "1850 psi", "2200 psi"],
+      "correct_answer": "1850 psi"
+    },
+    {
       "question": "At what cabin altitude do passenger oxygen masks automatically deploy?",
       "options": ["10,000 ft", "12,500 ft", "14,000 ft", "18,000 ft"],
       "correct_answer": "14,000 ft"
@@ -37,9 +97,9 @@
       "correct_answer": "12 minutes"
     },
     {
-      "question": "What is the maximum pressure of the crew oxygen cylinder?",
-      "options": ["1200 psi", "1500 psi", "1850 psi", "2200 psi"],
-      "correct_answer": "1850 psi"
+      "question": "How long does Protective Breathing Equipment (PBE) provide oxygen?",
+      "options": ["5–10 min", "10–15 min", "15–20 min", "30 min"],
+      "correct_answer": "15–20 min"
     },
     {
       "question": "What triggers emergency exit lighting when the switch is armed?",
@@ -52,19 +112,39 @@
       "correct_answer": "Loss of DC Bus 1"
     },
     {
-      "question": "Below what altitude does the vacuum waste system use a blower?",
-      "options": ["10,000 ft", "14,000 ft", "16,000 ft", "20,000 ft"],
-      "correct_answer": "16,000 ft"
+      "question": "How long do emergency exit light batteries last?",
+      "options": ["5 min", "8 min", "10 min", "20 min"],
+      "correct_answer": "10 min"
     },
     {
-      "question": "What is the usable capacity of the vacuum waste tank?",
-      "options": ["151 L", "189 L", "227 L", "300 L"],
-      "correct_answer": "227 L"
+      "question": "How long does it take to recharge emergency exit light batteries?",
+      "options": ["30 min", "60 min", "90 min", "120 min"],
+      "correct_answer": "90 min"
+    },
+    {
+      "question": "How long do photo-luminescent strips glow after charging?",
+      "options": ["2 hours", "4 hours", "6 hours", "8 hours"],
+      "correct_answer": "8 hours"
+    },
+    {
+      "question": "What are possible potable water tank capacities?",
+      "options": ["100 / 150 / 200 L", "151 / 189 / 227 L", "200 / 250 / 300 L", "120 / 180 / 240 L"],
+      "correct_answer": "151 / 189 / 227 L"
     },
     {
       "question": "What is the maximum temperature setting for lavatory water heaters?",
       "options": ["40°C", "46°C", "52°C", "60°C"],
       "correct_answer": "52°C"
+    },
+    {
+      "question": "At what temperature does lavatory heater overheat protection activate?",
+      "options": ["60°C", "65°C", "70°C", "76°C"],
+      "correct_answer": "76°C"
+    },
+    {
+      "question": "Below what altitude does the vacuum waste system use a blower?",
+      "options": ["10,000 ft", "14,000 ft", "16,000 ft", "20,000 ft"],
+      "correct_answer": "16,000 ft"
     }
   ]
 }
