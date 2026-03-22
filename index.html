@@ -112,7 +112,9 @@
       border: 1px solid var(--border);
     }
 
-    button:hover { filter: brightness(1.08); }
+    button:hover {
+      filter: brightness(1.08);
+    }
 
     .flashcard {
       background: linear-gradient(180deg, #172033 0%, #121a29 100%);
@@ -250,32 +252,35 @@
 <body>
   <div class="container">
     <section class="hero">
-      <div class="subtitle">Episode 1 – Boeing 737 Limitations</div>
+      <div class="subtitle" id="episodeSubtitle">Episode 01 – Airplane General</div>
       <h1>B737 Interview / Simulator Check Preparation</h1>
-      <p class="muted">A quick refresher for Boeing 737 limitations before airline interviews, simulator assessments, and recurrent checks.</p>
+      <p class="muted" id="episodeDescription">
+        Podcast, flashcards and quiz for Episode 01.
+      </p>
     </section>
 
     <section class="section audio-wrap">
       <h2>Podcast</h2>
-      <p class="muted">Listen to Episode 1 – Limitations.</p>
+      <p class="muted">Listen to this episode audio.</p>
       <audio controls>
-        <source src="episode1.mp3" type="audio/mpeg" />
+        <source src="podcast.mp3" type="audio/mpeg" />
         Your browser does not support the audio player.
       </audio>
       <div class="pill-row">
-        <div class="pill">VMO / MMO</div>
-        <div class="pill">Flaps & Gear</div>
-        <div class="pill">Altitude</div>
-        <div class="pill">Fuel</div>
-        <div class="pill">Wind Limits</div>
-        <div class="pill">Autoland</div>
-        <div class="pill">APU</div>
+        <div class="pill">Airplane General</div>
+        <div class="pill">Dimensions</div>
+        <div class="pill">Doors</div>
+        <div class="pill">Oxygen</div>
+        <div class="pill">Emergency Lighting</div>
+        <div class="pill">Water</div>
+        <div class="pill">Waste System</div>
       </div>
     </section>
 
     <section class="section">
       <h2>Flashcards</h2>
       <p class="muted">Use Previous / Next to move through the cards. Click Reveal Answer when ready.</p>
+
       <div class="controls">
         <button class="secondary" id="prevCard">Previous</button>
         <button id="revealCard">Reveal Answer</button>
@@ -299,7 +304,7 @@
 
     <section class="section">
       <h2>Quiz</h2>
-      <p class="muted">Full limitations knowledge check.</p>
+      <p class="muted">Knowledge check for this episode.</p>
 
       <div class="quiz-box" id="quizBox">
         <div class="quiz-status">
@@ -330,7 +335,7 @@
     </section>
 
     <div class="footer">
-      Values are based on your selected B737NG limitations dataset. Operator SOP limits may differ.
+      Values are based on your selected B737 dataset. Operator SOP limits may differ.
     </div>
   </div>
 
@@ -354,10 +359,10 @@
 
       const card = flashcards[currentCard];
       document.getElementById('cardCounter').textContent = `Card ${currentCard + 1} / ${flashcards.length}`;
-      document.getElementById('cardQuestion').textContent = card.question;
-
+      document.getElementById('cardQuestion').textContent = card.question || 'No question';
+      
       const answerEl = document.getElementById('cardAnswer');
-      answerEl.textContent = card.answer;
+      answerEl.textContent = card.answer || 'No answer';
       answerEl.style.display = 'none';
     }
 
@@ -398,9 +403,7 @@
 
     function setQuizProgressBar(widthValue) {
       const progressBar = document.getElementById('quizProgressBar');
-      if (progressBar) {
-        progressBar.style.width = widthValue;
-      }
+      if (progressBar) progressBar.style.width = widthValue;
     }
 
     function renderQuiz() {
@@ -430,7 +433,7 @@
 
       document.getElementById('quizProgress').textContent = `Question ${quizIndex + 1} / ${quiz.length}`;
       document.getElementById('quizScoreLive').textContent = `Score: ${score}`;
-      document.getElementById('quizQuestion').textContent = q.question;
+      document.getElementById('quizQuestion').textContent = q.question || 'No question';
 
       const progressPercent = (quizIndex / quiz.length) * 100;
       setQuizProgressBar(`${progressPercent}%`);
@@ -438,27 +441,29 @@
       const optionsEl = document.getElementById('quizOptions');
       optionsEl.innerHTML = '';
 
-      q.options.forEach((option, index) => {
+      (q.options || []).forEach((option) => {
         const btn = document.createElement('button');
         btn.className = 'option';
         btn.textContent = option;
-        btn.addEventListener('click', () => handleAnswer(index, btn));
+        btn.addEventListener('click', () => handleAnswer(option, btn));
         optionsEl.appendChild(btn);
       });
     }
 
-    function handleAnswer(selectedIndex, selectedButton) {
+    function handleAnswer(selectedOption, selectedButton) {
       if (answered) return;
 
       answered = true;
       const q = quiz[quizIndex];
       const buttons = Array.from(document.querySelectorAll('.option'));
 
-      buttons.forEach((btn, idx) => {
-        if (idx === q.correct) btn.classList.add('correct');
+      buttons.forEach((btn) => {
+        if (btn.textContent === q.correct_answer) {
+          btn.classList.add('correct');
+        }
       });
 
-      if (selectedIndex === q.correct) {
+      if (selectedOption === q.correct_answer) {
         score += 1;
       } else {
         selectedButton.classList.add('wrong');
@@ -498,7 +503,11 @@
       if (restartQuizBtn) restartQuizBtn.addEventListener('click', restartQuiz);
 
       try {
-        flashcards = await loadJson('flashcards.json');
+        const flashcardsData = await loadJson('flashcards.json');
+        if (flashcardsData.episode) {
+          document.getElementById('episodeSubtitle').textContent = flashcardsData.episode;
+        }
+        flashcards = Array.isArray(flashcardsData.flashcards) ? flashcardsData.flashcards : [];
         renderCard();
       } catch (e) {
         document.getElementById('cardQuestion').textContent = 'Could not load flashcards.';
@@ -507,7 +516,11 @@
       }
 
       try {
-        quiz = await loadJson('quiz.json');
+        const quizData = await loadJson('quiz.json');
+        if (quizData.episode) {
+          document.getElementById('episodeSubtitle').textContent = quizData.episode;
+        }
+        quiz = Array.isArray(quizData.quiz) ? quizData.quiz : [];
         renderQuiz();
       } catch (e) {
         document.getElementById('quizQuestion').textContent = 'Could not load quiz.';

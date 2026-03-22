@@ -1,51 +1,70 @@
-[
-{"id":1,"question":"What is VMO?","options":["330 kt","340 kt","350 kt","360 kt"],"correct":1},
-
-{"id":2,"question":"What is MMO?","options":["Mach 0.78","Mach 0.80","Mach 0.82","Mach 0.85"],"correct":2},
-
-{"id":3,"question":"Maximum operating altitude?","options":["FL390","FL400","FL410","FL430"],"correct":2},
-
-{"id":4,"question":"Maximum tire speed?","options":["185 kt","195 kt","200 kt","210 kt"],"correct":1},
-
-{"id":5,"question":"Turbulence penetration speed?","options":["260 kt","280 kt","300 kt","320 kt"],"correct":1},
-
-{"id":6,"question":"Turbulence penetration Mach number?","options":["Mach 0.72","Mach 0.74","Mach 0.76","Mach 0.80"],"correct":2},
-
-{"id":7,"question":"Maximum flap extension altitude?","options":["10,000 ft","15,000 ft","20,000 ft","25,000 ft"],"correct":2},
-
-{"id":8,"question":"Maximum landing gear extension speed?","options":["250 kt","270 kt","300 kt","320 kt"],"correct":1},
-
-{"id":9,"question":"Maximum landing gear retraction speed?","options":["235 kt","250 kt","270 kt","300 kt"],"correct":0},
-
-{"id":10,"question":"Maximum landing gear extended speed?","options":["270 kt","300 kt","320 kt","340 kt"],"correct":2},
-
-{"id":11,"question":"Maximum airport elevation for takeoff?","options":["7000 ft","7500 ft","8400 ft","10000 ft"],"correct":2},
-
-{"id":12,"question":"Maximum cabin differential pressure?","options":["8.5 psi","8.9 psi","9.1 psi","9.5 psi"],"correct":2},
-
-{"id":13,"question":"Maximum fuel imbalance?","options":["300 kg","453 kg","750 kg","1000 kg"],"correct":1},
-
-{"id":14,"question":"Minimum fuel temperature?","options":["-35°C","-40°C","-43°C","-50°C"],"correct":2},
-
-{"id":15,"question":"Maximum demonstrated crosswind?","options":["30 kt","33 kt","36 kt","40 kt"],"correct":2},
-
-{"id":16,"question":"When should engine ignition be set to CONT?","options":["Cruise only","Descent only","Takeoff, landing, turbulence and heavy precipitation","Only during engine start"],"correct":2},
-
-{"id":17,"question":"Maximum tailwind for takeoff and landing?","options":["5 kt","10 kt","15 kt","20 kt"],"correct":1},
-
-{"id":18,"question":"Maximum autoland headwind?","options":["20 kt","25 kt","30 kt","35 kt"],"correct":1},
-
-{"id":19,"question":"Maximum autoland crosswind?","options":["10 kt","15 kt","20 kt","25 kt"],"correct":2},
-
-{"id":20,"question":"Maximum autoland tailwind?","options":["5 kt","10 kt","15 kt","20 kt"],"correct":1},
-
-{"id":21,"question":"Minimum autopilot engagement height?","options":["200 ft","300 ft","400 ft","500 ft"],"correct":2},
-
-{"id":22,"question":"Minimum autopilot disengagement height?","options":["100 ft","158 ft","30 ft","20 ft"],"correct":1},
-
-{"id":23,"question":"APU electrical power available up to?","options":["35000 ft","37000 ft","39000 ft","41000 ft"],"correct":3},
-
-{"id":24,"question":"APU bleed air available up to?","options":["10000 ft","15000 ft","17000 ft","20000 ft"],"correct":2},
-
-{"id":25,"question":"At what altitude is APU bleed air with APU electrical load available?","options":["5000 ft","10000 ft","15000 ft","17000 ft"],"correct":1}
-]
+{
+  "episode": "Episode 01 - Airplane General",
+  "quiz": [
+    {
+      "question": "What is the wingspan of the Boeing 737-800?",
+      "options": ["32.2 m", "35.8 m", "39.5 m", "41.2 m"],
+      "correct_answer": "35.8 m"
+    },
+    {
+      "question": "What is the length of the Boeing 737-800?",
+      "options": ["33.6 m", "36.2 m", "39.5 m", "42.1 m"],
+      "correct_answer": "39.5 m"
+    },
+    {
+      "question": "How much pavement width is roughly required to perform a 180° turn with a Boeing 737-900?",
+      "options": ["18 m", "22 m", "26 m", "30 m"],
+      "correct_answer": "26 m"
+    },
+    {
+      "question": "What is the maximum wind limit for operating entry doors?",
+      "options": ["30 kt", "35 kt", "40 kt", "50 kt"],
+      "correct_answer": "40 kt"
+    },
+    {
+      "question": "What gust limit requires closing open doors immediately?",
+      "options": ["50 kt", "55 kt", "60 kt", "65 kt"],
+      "correct_answer": "65 kt"
+    },
+    {
+      "question": "At what cabin altitude do passenger oxygen masks automatically deploy?",
+      "options": ["10,000 ft", "12,500 ft", "14,000 ft", "18,000 ft"],
+      "correct_answer": "14,000 ft"
+    },
+    {
+      "question": "How long does passenger chemical oxygen typically last?",
+      "options": ["8 minutes", "10 minutes", "12 minutes", "20 minutes"],
+      "correct_answer": "12 minutes"
+    },
+    {
+      "question": "What is the maximum pressure of the crew oxygen cylinder?",
+      "options": ["1200 psi", "1500 psi", "1850 psi", "2200 psi"],
+      "correct_answer": "1850 psi"
+    },
+    {
+      "question": "What triggers emergency exit lighting when the switch is armed?",
+      "options": [
+        "Loss of AC Bus 1",
+        "Loss of DC Bus 1",
+        "Loss of battery power",
+        "Loss of hydraulic pressure"
+      ],
+      "correct_answer": "Loss of DC Bus 1"
+    },
+    {
+      "question": "Below what altitude does the vacuum waste system use a blower?",
+      "options": ["10,000 ft", "14,000 ft", "16,000 ft", "20,000 ft"],
+      "correct_answer": "16,000 ft"
+    },
+    {
+      "question": "What is the usable capacity of the vacuum waste tank?",
+      "options": ["151 L", "189 L", "227 L", "300 L"],
+      "correct_answer": "227 L"
+    },
+    {
+      "question": "What is the maximum temperature setting for lavatory water heaters?",
+      "options": ["40°C", "46°C", "52°C", "60°C"],
+      "correct_answer": "52°C"
+    }
+  ]
+}
